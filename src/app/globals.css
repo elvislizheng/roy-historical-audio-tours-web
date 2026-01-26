@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #0c4a6e;
-  --accent: #0284c7;
-  --accent-light: #38bdf8;
+  --background: #1a1a1a;
+  --foreground: #ffffff;
+  --accent: #e85a4f;
+  --accent-secondary: #4ecdc4;
 }
 
 @theme inline {
@@ -22,5 +22,10 @@ body {
 
 /* Custom audio player styling */
 audio::-webkit-media-controls-panel {
-  background-color: #f0f9ff;
+  background-color: #2a2a2a;
+}
+
+audio::-webkit-media-controls-current-time-display,
+audio::-webkit-media-controls-time-remaining-display {
+  color: #ffffff;
 }

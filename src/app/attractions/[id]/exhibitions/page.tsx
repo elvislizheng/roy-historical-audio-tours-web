@@ -22,109 +22,97 @@ export default function ExhibitionsPage({ params }: PageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-white font-sans">
-      <main className="mx-auto max-w-4xl px-4 py-8">
-        <div className="mb-6 flex items-center justify-between">
-          <Link
-            href={`/attractions/${attraction.id}`}
-            className="inline-flex items-center gap-2 rounded-full bg-sky-50 px-4 py-2 text-sm font-medium text-slate-600 shadow-sm transition-all hover:bg-sky-100 hover:shadow-md"
-          >
-            <svg
-              className="h-4 w-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+    <div className="min-h-screen bg-[#1a1a1a] font-sans">
+      <main className="mx-auto max-w-5xl px-6 py-12">
+        <header className="mb-12">
+          <div className="flex items-center justify-between border-b border-neutral-800 pb-6">
+            <Link
+              href={`/attractions/${attraction.id}`}
+              className="group flex items-center gap-3 text-sm text-neutral-400 transition-colors hover:text-white"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-            {language === "en" ? "Back" : "返回"}
-          </Link>
-          <LanguageToggle />
-        </div>
-
-        <header className="mb-8 text-center">
-          <p className="mb-2 text-sm font-medium uppercase tracking-wider text-sky-600">
-            {attraction.shortName}
-          </p>
-          <h1 className="bg-gradient-to-r from-sky-700 to-blue-600 bg-clip-text text-3xl font-bold text-transparent">
-            {language === "en" ? "Choose Your Tour" : "选择您的导览"}
-          </h1>
-          <p className="mt-2 text-slate-600">
-            {attraction.name[language]}
-          </p>
+              <svg
+                className="h-5 w-5 transition-transform group-hover:-translate-x-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1}
+                  d="M7 16l-4-4m0 0l4-4m-4 4h18"
+                />
+              </svg>
+              <span className="uppercase tracking-[0.2em]">
+                {language === "en" ? "Back" : "返回"}
+              </span>
+            </Link>
+            <LanguageToggle />
+          </div>
         </header>
 
+        <div className="mb-12 text-center">
+          <p className="text-xs font-medium uppercase tracking-[0.3em] text-[#e85a4f]">
+            {attraction.shortName}
+          </p>
+          <h1 className="mt-4 text-4xl font-light text-white md:text-5xl">
+            {language === "en" ? "Exhibitions" : "展览"}
+          </h1>
+          <p className="mt-4 text-neutral-400">
+            {attraction.name[language]}
+          </p>
+        </div>
+
         <div className="grid gap-4">
-          {attraction.exhibitions.map((exhibition) => {
+          {attraction.exhibitions.map((exhibition, index) => {
             const exhibitionDetail = exhibitions[exhibition.id];
             const hasStories = exhibitionDetail?.stories?.length > 0;
+            const colors = ["#e85a4f", "#4ecdc4", "#f7b731", "#a55eea", "#26de81"];
+            const color = colors[index % colors.length];
 
             return (
               <Link
                 key={exhibition.id}
                 href={`/attractions/${attraction.id}/exhibitions/${exhibition.id}`}
-                className="group overflow-hidden rounded-2xl border border-sky-200 bg-white shadow-md transition-all hover:-translate-y-1 hover:shadow-xl"
+                className="group flex items-center justify-between border border-neutral-800 p-6 transition-all hover:border-neutral-600 hover:bg-[#222]"
+                style={{ "--hover-color": color } as React.CSSProperties}
               >
-                <div className="flex items-center p-5">
-                  <div className="mr-4 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-sky-400 to-blue-500 shadow-md">
-                    <svg
-                      className="h-6 w-6 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
-                      />
-                    </svg>
+                <div className="flex items-center gap-6">
+                  <div
+                    className="flex h-12 w-12 items-center justify-center text-xl font-light text-white"
+                    style={{ backgroundColor: color }}
+                  >
+                    {String(index + 1).padStart(2, "0")}
                   </div>
-                  <div className="flex-grow">
-                    <h2 className="text-lg font-bold text-slate-800 group-hover:text-sky-700">
+                  <div>
+                    <h2 className="text-xl font-light text-white group-hover:text-[var(--hover-color)]">
                       {exhibition.name[language]}
                     </h2>
-                    {hasStories && (
-                      <p className="mt-1 flex items-center gap-1 text-sm text-slate-500">
-                        <svg
-                          className="h-4 w-4 text-sky-500"
-                          fill="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-                        </svg>
+                    {hasStories ? (
+                      <p className="mt-1 text-sm text-neutral-500">
                         {exhibitionDetail.stories.length}{" "}
                         {language === "en" ? "audio stories" : "个语音故事"}
                       </p>
-                    )}
-                    {!hasStories && (
-                      <p className="mt-1 text-sm text-slate-400">
+                    ) : (
+                      <p className="mt-1 text-sm text-neutral-600">
                         {language === "en" ? "Coming soon" : "即将推出"}
                       </p>
                     )}
                   </div>
-                  <div className="ml-4 rounded-full bg-sky-100 p-2 transition-colors group-hover:bg-sky-200">
-                    <svg
-                      className="h-5 w-5 text-sky-600"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </div>
                 </div>
+                <svg
+                  className="h-6 w-6 text-neutral-600 transition-all group-hover:translate-x-1 group-hover:text-[var(--hover-color)]"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1}
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
+                </svg>
               </Link>
             );
           })}

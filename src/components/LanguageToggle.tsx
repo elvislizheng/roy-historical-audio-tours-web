@@ -6,23 +6,24 @@ export function LanguageToggle() {
   const { language, setLanguage } = useLanguage();
 
   return (
-    <div className="flex overflow-hidden rounded-full border border-sky-200 bg-white shadow-sm">
+    <div className="flex gap-1">
       <button
         onClick={() => setLanguage("en")}
-        className={`px-4 py-2 text-sm font-medium transition-all ${
+        className={`px-4 py-2 text-sm font-medium uppercase tracking-wider transition-all ${
           language === "en"
-            ? "bg-gradient-to-r from-sky-500 to-blue-500 text-white shadow-md"
-            : "text-slate-600 hover:text-sky-700"
+            ? "text-white border-b-2 border-[#e85a4f]"
+            : "text-neutral-400 hover:text-white"
         }`}
       >
         EN
       </button>
+      <span className="text-neutral-600 py-2">/</span>
       <button
         onClick={() => setLanguage("zh")}
-        className={`px-4 py-2 text-sm font-medium transition-all ${
+        className={`px-4 py-2 text-sm font-medium tracking-wider transition-all ${
           language === "zh"
-            ? "bg-gradient-to-r from-sky-500 to-blue-500 text-white shadow-md"
-            : "text-slate-600 hover:text-sky-700"
+            ? "text-white border-b-2 border-[#e85a4f]"
+            : "text-neutral-400 hover:text-white"
         }`}
       >
         中文
