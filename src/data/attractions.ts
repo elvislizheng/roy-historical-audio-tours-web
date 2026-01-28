@@ -87,4 +87,33 @@ export const attractions: Attraction[] = [
       },
     ],
   },
+  {
+    id: "british-museum",
+    name: {
+      en: "British Museum",
+      zh: "大英博物馆",
+    },
+    shortName: "British Museum",
+    description: {
+      en: "One of the world's greatest museums of human history, art and culture. The British Museum holds over 8 million works and is dedicated to human history, art and culture from ancient times to the present.",
+      zh: "世界上最伟大的人类历史、艺术和文化博物馆之一。大英博物馆收藏超过800万件文物，致力于展示从古代到现代的人类历史、艺术和文化。",
+    },
+    address: {
+      en: "Great Russell Street, London WC1B 3DG, United Kingdom",
+      zh: "英国伦敦大罗素街 WC1B 3DG",
+    },
+    latitude: 51.5194,
+    longitude: -0.127,
+    exhibitions: [
+      {
+        id: "rosetta-stone",
+        name: {
+          en: "The Rosetta Stone",
+          zh: "罗塞塔石碑",
+        },
+        latitude: 51.5195,
+        longitude: -0.1269,
+      },
+    ],
+  },
 ];

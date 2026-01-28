@@ -6,7 +6,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { use } from "react";
+import { use, useRef } from "react";
 import Image from "next/image";
 
 interface PageProps {
@@ -16,6 +16,7 @@ interface PageProps {
 export default function ExhibitionDetailPage({ params }: PageProps) {
   const { id, exhibitionId } = use(params);
   const { language } = useLanguage();
+  const audioRefs = useRef<(HTMLAudioElement | null)[]>([]);
 
   const attraction = attractions.find((a) => a.id === id);
   const exhibition = exhibitions[exhibitionId];
@@ -23,6 +24,14 @@ export default function ExhibitionDetailPage({ params }: PageProps) {
   if (!attraction || !exhibition) {
     notFound();
   }
+
+  const handlePlay = (currentIndex: number) => {
+    audioRefs.current.forEach((audio, index) => {
+      if (audio && index !== currentIndex && !audio.paused) {
+        audio.pause();
+      }
+    });
+  };
 
   return (
     <div className="min-h-screen bg-[#1a1a1a] font-sans">
@@ -134,9 +143,13 @@ export default function ExhibitionDetailPage({ params }: PageProps) {
                     <div className="border-b border-neutral-800 bg-[#222] p-6">
                       <audio
                         key={language}
+                        ref={(el) => {
+                          audioRefs.current[index] = el;
+                        }}
                         controls
                         className="w-full"
                         src={story.audioUrl[language]}
+                        onPlay={() => handlePlay(index)}
                       >
                         {language === "en"
                           ? "Your browser does not support the audio element."
